@@ -6,7 +6,6 @@
 #include <libgen.h>
 
 
-char color[6]; // white - black
 void play(int othello[8][8], int next[8][8], int i, int j, int turn){
 
     int k;
@@ -214,20 +213,11 @@ void play(int othello[8][8], int next[8][8], int i, int j, int turn){
 
 }
 
-/*
-en: save move in file
-*/
-void save(int row, int col){
-	FILE* file;
-	char temp[10];
-	strcpy(temp, color);
-	strcat(temp, ".dat");
-	file = fopen(temp, "w");
-	fprintf(file, "%d%d", row + 1, col + 1);
-	fclose(file);
+void setLocation(int row, int col,int turn){
+	othello[i][j] = turn;
 }
 
-void advancedMove(int othello[8][8], int valid[8][8], int turn)
+void myMove(int othello[8][8], int valid[8][8], int turn)
 {
    int i , j,next[8][8];
 
@@ -236,11 +226,11 @@ void advancedMove(int othello[8][8], int valid[8][8], int turn)
         for(i=1;i<8;i++)
         {
             if(valid[0][i]==turn){
-                save(0, i);
+                setLocation(0, i,turn);
                 return ;
             }
             if(valid[i][0]==turn){
-                save( i, 0) ;
+                setLocation( i, 0,turn) ;
                 return ;
             }
         }
@@ -251,11 +241,11 @@ void advancedMove(int othello[8][8], int valid[8][8], int turn)
         for(i=1;i<8;i++)
         {
             if(valid[7][i]==turn){
-                 save( 7, i);
+                 setLocation( 7, i,turn);
                 return ;
             }
             if(valid[0][7-i]==turn){
-                save(0,7-i);
+                setLocation(0,7-i,turn);
                 return ;
             }
         }
@@ -265,11 +255,11 @@ void advancedMove(int othello[8][8], int valid[8][8], int turn)
         for(i=1;i<8;i++)
         {
             if(valid[7][i]==turn){
-                 save( 7, i);
+                 setLocation( 7, i,turn);
                 return ;
             }
             if(valid[7-i][0]==turn){
-                save(7-i, 0);
+                setLocation(7-i, 0,turn);
                 return ;
             }
         }
@@ -280,11 +270,11 @@ void advancedMove(int othello[8][8], int valid[8][8], int turn)
         for(i=1;i<8;i++)
         {
             if(valid[7][7-i]==turn){
-                 save( 7, 7-i);
+                 setLocation( 7, 7-i,turn);
                 return ;
             }
             if(valid[7-i][7]==turn){
-                 save( 7-i, 7);
+                 setLocation( 7-i, 7,turn);
                 return ;
             }
         }
@@ -292,96 +282,96 @@ void advancedMove(int othello[8][8], int valid[8][8], int turn)
 
 
    if(valid[0][0]==turn){
-     save( 0, 0);
+     setLocation( 0, 0,turn);
     return ;
    }
    if(valid[0][7]==turn){
-     save( 0, 7);
+     setLocation( 0, 7);
     return ;
    }
    if(valid[7][0]==turn){
-     save(7, 0);
+     setLocation(7, 0,turn);
     return ;
    }
    if(valid[7][7]==turn){
-    save( 7, 7);
+    setLocation( 7, 7,turn);
     return ;
    }
 
 
    if(valid[3][0]==turn){
-    save( 3, 0);
+    setLocation( 3, 0,turn);
     return ;
    }
    if(valid[4][0]==turn){
-    save(4, 0);
+    setLocation(4, 0,turn);
     return ;
    }
    if(valid[0][3]==turn){
-     save(0, 3);
+     setLocation(0, 3,turn);
     return ;
    }
 
    if(valid[0][4]==turn){
-     save(0, 4);
+     setLocation(0, 4,turn);
     return ;
    }
 
    if(valid[3][7]==turn){
-     save(3,7);
+     setLocation(3,7,turn);
     return ;
    }
 
    if(valid[4][7]==turn){
-     save(4, 7);
+     setLocation(4, 7,turn);
     return ;
    }
 
    if(valid[7][3]==turn){
-    save(7, 3);
+    setLocation(7, 3,turn);
     return ;
    }
 
    if(valid[7][4]==turn){
-    save(7, 4);
+    setLocation(7, 4,turn);
     return ;
    }
    //***//
    if(valid[2][0]==turn){
-     save(2, 0);
+     setLocation(2, 0,turn);
     return ;
    }
 
    if(valid[5][0]==turn){
-   save(5, 0);
+   setLocation(5, 0,turn);
     return ;
    }
 
    if(valid[0][2]==turn){
-    save(0,2);
+    setLocation(0,2,turn);
     return ;
    }
    if(valid[0][5]==turn){
-    save(0, 5);
+    setLocation(0, 5,turn);
     return ;
    }
 
    if(valid[2][7]==turn){
-   save(2, 7);
+   setLocation(2, 7,turn);
     return ;
    }
 
    if(valid[5][7]==turn){
-    save(5,7);
+    setLocation(5,7,turn);
     return ;
    }
 
    if(valid[7][2]==turn){
-   save(7, 2);
+   setLocation(7, 2,turn);
     return ;
    }
    if(valid[7][5]==turn){
-    save(7, 5);
+    setLocation(7, 5,turn);
     return ;
    }
 
@@ -390,35 +380,20 @@ void advancedMove(int othello[8][8], int valid[8][8], int turn)
 			if(valid[i][j]==turn && (i!=1 &&j!=0 )&& (i!=1 &&j!=1 )&& (i!=7 &&j!=6 ) && (i!=0 &&j!=1 )
       				&& (i!=6 &&j!=7 )&& (i!=6 &&j!=0 )&& (i!=7 &&j!=1 )&& (i!=6 &&j!=1 )&& (i!=0 &&j!=6 )&& (i!=6 &&j!=6 )
       				&& (i!=1 &&j!=7 )&& (i!=1 &&j!=6 )){
-				save(i, j);
+				setLocation(i, j,turn);
 				return;
 			}
    for(i = 0; i < 8; i++)
 		for(j = 0; j < 8; j++)
 			if(valid[i][j]){
-				save(i,j);
+				setLocation(i,j,turn);
 				return;
 			}
 }
 
 
 
-
-
-void basicMove(int othello[8][8], int valid[8][8]){
-	int i, j;
-	for(i = 0; i < 8; i++)
-		for(j = 0; j < 8; j++)
-			if(valid[i][j]){
-				save(i, j);
-				return;
-			}
-}
-/*
-en: This function calculates the valid points and stores them in valid[8][8]
-fa: In tabe' khanehaye ghabele baazi kardan ra mohasebe mikonad va an ra dar valid[8][8] zakhire mikonad
-*/
-void getValid(int othello[8][8], int valid[8][8], int turn){
+void isValidNode(int othello[8][8], int valid[8][8], int turn){
 	int i, j, k;
 	for(i = 0; i < 8; i++)
 		for(j = 0; j < 8; j++)
@@ -511,61 +486,17 @@ void getValid(int othello[8][8], int valid[8][8], int turn){
 		}
 }
 
-/*
-en: This function simulates a move took place in position: othello[i][j] and store data in next[8][8]
-fa: In tabe' harekati ke ba othello[i][j] ast ra anjam midahad va an ra dar next[8][8] zakhire mikonad
- */
-
-
-/*
-en: read map data
-*/
-void read(int othello[8][8]){
-	FILE* file;
-	file = fopen("map.dat", "r");
-	int i, j;
-	char  temp;
-	for(i = 0; i < 8; i++){
-		for(j = 0; j < 8; j++){
-			fscanf(file, "%c", &temp);
-			othello[i][j] = temp - 48;
-		}
-		fscanf(file, "%c", &temp);
-	}
-}
-
-/*
-en: print map, 0: none, 1: white-W, 2: black-B
-*/
 void print(int othello[8][8]){
 	int i, j;
-	puts("******************START*********************");
 	for(i = 0; i < 8; i++){
 		for(j = 0; j < 8; j++)
 			printf("%c ", (othello[i][j])?(othello[i][j]==1?'W':'B'):'.');
-//			printf("%d ", othello[i][j]);
 		printf("\n");
 	}
-	puts("*******************END**********************");
 }
 
-void fprint(int othello[8][8], char* name){
-	int i, j;
-	FILE* temp;
-	temp = fopen(name, "w");
-	fputs("******************START*********************\n", temp);
-	for(i = 0; i < 8; i++){
-		for(j = 0; j < 8; j++)
-			fprintf(temp, "%c ", (othello[i][j])?(othello[i][j]==1?'W':'B'):'.');
-		fprintf(temp, "\n");
-	}
-	fputs("*******************END**********************", temp);
-}
 
-/*
-en: turn according to color
-*/
-int checkColor(){
+int ColorFunction(){
 	if(strcmp(color, "white") == 0){
 		return 1;
 	} else {
@@ -573,27 +504,25 @@ int checkColor(){
 	}
 }
 
-/*
-main function. Program can only run once.
-*/
 int main(int argc, char* argv[]){
-	char* filename;
-	filename = basename(argv[0]);
-	strncpy(color, filename, 5);
-	color[5] = '\0';
 	int othello[8][8];
 	int valid[8][8];
-	int turn = checkColor(color);
-//	int next[8][8];
+	int i = 1;
+	bool flag = true;
+	int turn = 0;
+	while(flag){
+		if(i % 2 == 1)
+			turn = 1;
+		else
+			turn = 2;
+		
+		isValidNode(othello, valid, turn);
 
-	read(othello);
-	//print(othello);
+    	myMove(othello,valid, turn);
+	}
 
-	getValid(othello, valid, turn);
-	//print(valid);
 
-    advancedMove(othello,valid, turn);
-	//basicMove(othello, valid);
+
 	return 0;
 }
 
